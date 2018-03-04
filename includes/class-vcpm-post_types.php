@@ -143,7 +143,7 @@ class Vcpm_Post_Types {
             'menu_icon' => 'dashicons-groups',
             'supports' => array( 'title', 'thumbnail'),
             'rewrite' => array(
-                    "slug" => esc_attr__( 'team', 'vcpm' ) // Permalinks format
+                    "slug" => esc_attr__( 'teams', 'vcpm' ) // Permalinks format
                 ),
             'public' => true,
             'has_archive' => true

@@ -126,3 +126,9 @@ input::-moz-focus-outer {
 .vcpm-text{
   width: 100%;
 }
+.vcpm-table label {
+    margin-right: 10px;
+}
+.meta-desc {
+    font-size: 11px;
+}

@@ -4,11 +4,11 @@
  * URL: http://www.rakibhossain.cf
  * Description: This js file is required for media object
  * Author   : Rakib Hossain
-/* Email    :   serakib@gmail.com                   
-/* Facebook :   http://www.facebook.com/prof.rakib  
-/* Github   :   http://github.com/serakib           
-/* Linkedin :   https://www.linkedin.com/in/serakib 
-/* Website  :   http://www.rakibhossain.cf 
+ * Email    :   serakib@gmail.com                   
+ * Facebook :   http://www.facebook.com/prof.rakib  
+ * Github   :   http://github.com/serakib           
+ * Linkedin :   https://www.linkedin.com/in/serakib 
+ * Website  :   http://www.rakibhossain.cf 
  *========================================
  */
 
@@ -79,6 +79,57 @@ jQuery(document).ready(function($){
 	};
 
 	rangeSlider();
+		
+
+    //multiple checkbox
+    var multiple_checkbox = function(){
+    	var wrapper = $('.multiple__checkbox'),
+    	checkbox = $('.single__checkbox'),
+    	tmp_val='',
+    	current_val='';
+    	wrapper.each(function(){
+
+
+
+    		checkbox.on('click', function(){
+
+    			var value = $(this).parent().children('.multiple__checkbox__value'),
+    			val = $(this).parent().children('.multiple__checkbox__value').val(),
+    			this_val = $(this).val();
+
+    			console.log(this_val);
+
+    			if ($(this).is(':checked')) {
+    				$(this).attr('checked','checked');
+
+    				if (value.val().indexOf(this_val) === -1) {
+    					tmp_val = this_val;
+    					if (value.val()=='') {
+    						current_val = tmp_val;
+    					}else{current_val = value.val() + ' ' + tmp_val;}
+
+    					value.val('').val(current_val);
+
+    				}else{
+    					value.val('').val(val);
+    				}
+
+    			}else{
+    				$(this).removeAttr('checked');
+    				if(value.val().indexOf(this_val) != -1){
+    					var rep = value.val().replace(this_val, '');
+    					rep = rep.trim();
+    					value.val('').val(rep);
+
+    				}
+    			}
+
+    		});
+
+    	});
+    };
+
+    multiple_checkbox();
 
 
 });

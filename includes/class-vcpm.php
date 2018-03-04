@@ -88,8 +88,8 @@ class Vcpm {
 	 * - Vcpm_i18n. Defines internationalization functionality.
 	 * - Vcpm_Admin. Defines all hooks for the admin area.
 	 * - Vcpm_Post_Types. Defines all Custom post types
-	 * - Vcpm_Meta_Core. Defines core functionality of meta box.
-	 * - Vcpm_Meta_Box. Defines Meta Boxes for the admin area.
+	 * - Vcpm_Taxonomy. Defines portfolio texonomy.
+	 * - Vcpm_Meta. Defines Meta Boxes for the admin area.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -127,14 +127,14 @@ class Vcpm {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-taxonomy.php';
 
 		/**
-		 * Meta Box Core functionality.
+		 * Meta Box.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-meta.php';
-		
+
 		/**
-		 * Meta Boxes.
+		 * Meta Box fields render.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/meta_box.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-meta-render.php';
 
 		$this->loader = new Vcpm_Loader();
 
@@ -170,13 +170,8 @@ class Vcpm {
 		$vcpm_post_types = new Vcpm_Post_Types();
 		$vcpm_Taxonomy = new Vcpm_Taxonomy();
 
-		$mbox = new Vcpm_Meta_Box();
-
-		$mbox_testimonial = new Vcpm_Meta_Core($mbox->meta_box_testimonial());
-		$mbox_portfolio = new Vcpm_Meta_Core($mbox->meta_box_portfolio());
-		$mbox_team = new Vcpm_Meta_Core($mbox->meta_box_team());
-		$mbox_skill = new Vcpm_Meta_Core($mbox->meta_box_skill());
-		$mbox_partner = new Vcpm_Meta_Core($mbox->meta_box_partner());
+		$vcpm_meta = new Vcpm_Meta();
+		$vcpm_meta_render = new Vcpm_Meta_Fields_Render();
 
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -191,17 +186,10 @@ class Vcpm {
 
 		$this->loader->add_action( 'init', $vcpm_Taxonomy, 'vcpm_taxonomy_portfolio' );
 
-		$this->loader->add_action( 'add_meta_boxes', $mbox_testimonial, 'add' );
-		$this->loader->add_action( 'add_meta_boxes', $mbox_portfolio, 'add' );
-		$this->loader->add_action( 'add_meta_boxes', $mbox_team, 'add' );
-		$this->loader->add_action( 'add_meta_boxes', $mbox_skill, 'add' );
-		$this->loader->add_action( 'add_meta_boxes', $mbox_partner, 'add' );
+		$this->loader->add_filter( 'vcpm_meta_fields_control', $vcpm_meta_render, 'meta_fields_show', 1, 3 );
 
-		$this->loader->add_action( 'save_post', $mbox_testimonial, 'save' );
-		$this->loader->add_action( 'save_post', $mbox_portfolio, 'save' );
-		$this->loader->add_action( 'save_post', $mbox_team, 'save' );
-		$this->loader->add_action( 'save_post', $mbox_skill, 'save' );
-		$this->loader->add_action( 'save_post', $mbox_partner, 'save' );
+		$this->loader->add_action( 'add_meta_boxes', $vcpm_meta, 'add' );
+		$this->loader->add_action( 'save_post', $vcpm_meta, 'save' );
 
 	}
 
