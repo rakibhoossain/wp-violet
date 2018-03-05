@@ -11,7 +11,7 @@
 
 class Vcpm_Meta
 {
-    protected static function vcpm_meta_box(){
+    public static function vcpm_meta_box(){
 
         $rating_list = array(1,2,3,4,5);
 
@@ -30,14 +30,14 @@ class Vcpm_Meta
             ),
             array(
                 'name' => __('Rating', 'vcpm'),
-                'desc' => '',
+                'desc' => '1 to 5',
                 'id' => 'rating',
                 'type' => 'select',
                 "options" => $rating_list
             ),
             array(
                 'name' => __('Radio', 'vcpm'),
-                'desc' => '',
+                'desc' => 'ooo',
                 'id' => 'ratyu',
                 'type' => 'radio',
                 "options" => array(
@@ -47,7 +47,7 @@ class Vcpm_Meta
             ),
             array(
                 'name' => __('Check', 'vcpm'),
-                'desc' => '',
+                'desc' => 'uu',
                 'id' => 'ra3yu',
                 'type' => 'checkbox',
                 "options" => array(
@@ -339,9 +339,6 @@ class Vcpm_Meta
             $new = isset($_POST[$field['id']]) ? $_POST[$field['id']] : '';
 
             switch ($field['type']) {
-                case 'info':
-                    $html .= '<h3 style="margin:0;padding:0;">'.$field['desc'].'</h3>';
-                    break;
                 case 'text':
                     $new = sanitize_text_field($new);
                     break;
@@ -402,46 +399,51 @@ class Vcpm_Meta
             // get current post meta data
             $meta = get_post_meta($post->ID, $field['id'], true);
 
-            $html.= '<tr><th style="width:20%"><label for="'. $field['id']. '"><strong>'. $field['name']. '</strong></label></th><td style="margin:0;padding:0;">';
+            $html.= '<tr>
+            
+                <th style="width:20%">
+                    <label for="'. $field['id']. '">
+                        <strong>'. $field['name']. '</strong>
+                    </label>
+                </th>
 
+                <td style="margin:0;padding:0;">';
             switch ($field['type']) {
                 case 'info':
                     $html .= '<h3 style="margin:0;padding:0;">'.$field['desc'].'</h3>';
                     break;
                 case 'text':
-                    $html .= '<input type="text" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" class="vcpm-text" /><br />'. '<span class="meta-desc">'. $field['desc'].'</span>';
+                    $html .= '<input type="text" title="'.$field['desc'].'" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" class="vcpm-text" />';
                     break;
                 case 'select':
-                    $html.= '<select name="'. $field['id']. '" id="'. $field['id']. '" style="min-width:30%">';
+                    $html.= '<select name="'. $field['id']. '" title="'.$field['desc'].'" id="'. $field['id']. '" style="min-width:30%">';
                     $html_select ='';
                     foreach ($field['options'] as $option) {
                         $opt = explode('|', $option);
                         if (count($opt) == 1) $opt[1] = strtolower($opt[0]);
                         $html_select .= '<option '. selected( $meta, $opt[1], false ). ' value="' . $opt[1] . '"' . '>'. $opt[0]. '</option>';
                     }
-                    $html.= $html_select.'</select><span class="meta-desc">'. $field['desc'].'</span>';
+                    $html.= $html_select.'</select>';
                     break;
                 case 'radio':
                     foreach ($field['options'] as $option) {
 
-                        $html.= '<label><input type="radio" name="'. $field['id']. '" value="'. $option['value']. '"'.checked( $option['value'], $meta, false ).' />'. $option['name'] . '</label>';
+                        $html.= '<label class="mr-10"><input type="radio" name="'. $field['id']. '" title="'.$field['desc'].'" value="'. $option['value']. '"'.checked( $option['value'], $meta, false ).' />'. $option['name'] . '</label>';
                     }
-                    $html.= '<span class="meta-desc">'. $field['desc'].'</span>';
                     break;
                 case 'checkbox':
-                    $meta = strtolower($meta);
-                    $arr = explode(' ',$meta);
+                    $arr = explode(',',$meta);
                     $html.= '<div class="multiple__checkbox">';
+
                     foreach ($field['options'] as $option) {
                         $option_value = strtolower($option['value']);
                         $option_value = preg_replace('/\s+/', '_', $option_value);
-
                         $checked = in_array($option_value, $arr) ? ' checked="checked"' : '';
-                        $html.= '<input class="single__checkbox" id="'.$option_value.'id" type="checkbox" value="'. $option_value. '"'.$checked.' /><label for="'.$option_value.'id">'.$option['name'].'</label>';
+
+                        $html.= '<input title="'.$field['desc'].'" class="single__checkbox" id="'.$option_value.'id" type="checkbox" value="'. $option_value. '"'.$checked.' /><label class="mr-10" for="'.$option_value.'id">'.$option['name'].'</label>';
                     }
                     $html.= '
-                    <input type="hidden" class="multiple__checkbox__value" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" /></div>
-                    <span class="meta-desc">'. $field['desc'].'</span>';
+                    <input type="hidden" class="multiple__checkbox__value" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" /></div>';
                     break;
                 case 'color':
                     $html.= '<input type="hidden" class="color_field"  name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" style="min-width:30%" /><br />'. '<span class="meta-desc">'. $field['desc'].'</span>';
@@ -449,22 +451,22 @@ class Vcpm_Meta
                 case 'range':
                     $html.= '
                         <div class="range-slider">
-                            <input class="range-slider__range" type="range" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" min="0" max="100">
+                            <input class="range-slider__range"  title="'.$field['desc'].'" type="range" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" min="0" max="100">
                             <span class="range-slider__value">'. $meta. '</span>
-                        </div><span class="meta-desc">'. $field['desc'].'</span>';
+                        </div>';
                     break;
                 case 'portfolio':
                     $url = esc_url($meta);
-                    $html.= '<button type="button" class="button" id="img-'. $field['id']. '">Choce</button>';
+                    $html.= '<button type="button" title="'.$field['desc'].'" class="button" id="img-'. $field['id']. '">Choce</button>';
                     if ($meta=='') {
                         $html.= '<div class="port_img_preview none"><img src="'. $url.'" id="port_img_preview" alt="File not selected" style="width: 200px; height: auto;"></div>'; 
                     }else{
                         $html.= '<div class="port_img_preview"><img src="'. $url.'" id="port_img_preview" alt="Portfolio" style="width: 200px; height: auto;"></div>'; 
                     }
-                    $html.= '<input type="hidden" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $url. '"/><span class="meta-desc">'. $field['desc'].'</span>';
+                    $html.= '<input type="hidden" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $url. '"/>';
                     break;
                 default:
-                   $html .= '<input type="text" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" class="vcpm-text" /><br />'. '<span class="meta-desc">'. $field['desc'].'</span>';
+                    $html .= '<input type="text" title="'.$field['desc'].'" name="'. $field['id']. '" id="'. $field['id']. '" value="'. $meta. '" class="vcpm-text" />';
             }
 
             $html.= '</td></tr>';

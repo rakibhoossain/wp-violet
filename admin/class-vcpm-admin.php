@@ -73,6 +73,7 @@ class Vcpm_Admin {
 		 * class.
 		 */
 		wp_enqueue_style( 'wp-color-picker');
+		wp_enqueue_style( 'vcpm-tooltip', plugin_dir_url( __FILE__ ) . 'css/vcpm-tooltip.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/vcpm-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -98,6 +99,8 @@ class Vcpm_Admin {
 
 		wp_enqueue_media();
 		wp_enqueue_script( 'wp-color-picker');
+
+		wp_enqueue_script( 'vcpm--tooltip', plugin_dir_url( __FILE__ ) . 'js/vcpm-tooltip.js', array( 'jquery-ui-tooltip' ), $this->version, false );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vcpm-admin.js', array( 'jquery' ), $this->version, false );
 

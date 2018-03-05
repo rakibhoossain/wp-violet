@@ -14,7 +14,7 @@ class Vcpm_Taxonomy {
     /**
      * Add taxonomies(portfolio category)
      *
-     * @link https://codex.wordpress.org/Function_Reference/register_post_type
+     * @link https://codex.wordpress.org/Function_Reference/register_taxonomy
      */
     public function vcpm_taxonomy_portfolio() {
         $labels = array(

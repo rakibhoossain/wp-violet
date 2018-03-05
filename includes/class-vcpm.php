@@ -131,11 +131,6 @@ class Vcpm {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-meta.php';
 
-		/**
-		 * Meta Box fields render.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-meta-render.php';
-
 		$this->loader = new Vcpm_Loader();
 
 	}
@@ -169,10 +164,7 @@ class Vcpm {
 		$plugin_admin = new Vcpm_Admin( $this->get_plugin_name(), $this->get_version() );
 		$vcpm_post_types = new Vcpm_Post_Types();
 		$vcpm_Taxonomy = new Vcpm_Taxonomy();
-
 		$vcpm_meta = new Vcpm_Meta();
-		$vcpm_meta_render = new Vcpm_Meta_Fields_Render();
-
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -185,8 +177,6 @@ class Vcpm {
 		$this->loader->add_action( 'init', $vcpm_post_types, 'vcpm_partner' );
 
 		$this->loader->add_action( 'init', $vcpm_Taxonomy, 'vcpm_taxonomy_portfolio' );
-
-		$this->loader->add_filter( 'vcpm_meta_fields_control', $vcpm_meta_render, 'meta_fields_show', 1, 3 );
 
 		$this->loader->add_action( 'add_meta_boxes', $vcpm_meta, 'add' );
 		$this->loader->add_action( 'save_post', $vcpm_meta, 'save' );
