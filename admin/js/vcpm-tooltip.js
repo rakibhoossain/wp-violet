@@ -1,3 +1,7 @@
+/*
+ * vcpm js for tooltip
+ *========================================
+ */
 jQuery(document).ready(function($){
 $( ".vcpm-table" ).tooltip({ position: {
     my: "center bottom-10",

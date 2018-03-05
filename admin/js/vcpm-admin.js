@@ -1,14 +1,5 @@
 /*
- * Name: Violet - Admin JS
- * Version : 1.1.1
- * URL: http://www.rakibhossain.cf
- * Description: This js file is required for media object
- * Author   : Rakib Hossain
- * Email    :   serakib@gmail.com                   
- * Facebook :   http://www.facebook.com/prof.rakib  
- * Github   :   http://github.com/serakib           
- * Linkedin :   https://www.linkedin.com/in/serakib 
- * Website  :   http://www.rakibhossain.cf 
+ * vcpm admin js
  *========================================
  */
 

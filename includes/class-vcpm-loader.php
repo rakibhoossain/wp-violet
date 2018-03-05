@@ -1,15 +1,4 @@
 <?php
-
-/**
- * Register all actions and filters for the plugin
- *
- * @link       www.rakibhossain.cf
- * @since      1.0.0
- *
- * @package    Vcpm
- * @subpackage Vcpm/includes
- */
-
 /**
  * Register all actions and filters for the plugin.
  *

@@ -34,35 +34,6 @@ class Vcpm_Meta
                 'id' => 'rating',
                 'type' => 'select',
                 "options" => $rating_list
-            ),
-            array(
-                'name' => __('Radio', 'vcpm'),
-                'desc' => 'ooo',
-                'id' => 'ratyu',
-                'type' => 'radio',
-                "options" => array(
-                    array('name' => 'Ja','value' =>'j' ),
-                    array('name' => 'C','value' =>'c' )
-                )
-            ),
-            array(
-                'name' => __('Check', 'vcpm'),
-                'desc' => 'uu',
-                'id' => 'ra3yu',
-                'type' => 'checkbox',
-                "options" => array(
-                    array('name' => 'Hu','value' =>'eval0 opi' ),
-                    array('name' => 'Cu','value' =>'skl' )
-                )
-            ),            array(
-                'name' => __('Check 2', 'vcpm'),
-                'desc' => '',
-                'id' => 'ra3yu5',
-                'type' => 'checkbox',
-                "options" => array(
-                    array('name' => 'Hu','value' =>'eva opi' ),
-                    array('name' => 'Cu','value' =>'pi' )
-                )
             )
         );
 
@@ -300,9 +271,9 @@ class Vcpm_Meta
 
          $this->meta_box = self::vcpm_meta_box();
 
-        if (array_key_exists(get_post_type( get_the_ID() ),$this->meta_box))
+        if (array_key_exists(get_post_type($post_id),$this->meta_box))
           {
-            $this->post_type =  get_post_type( get_the_ID() );
+            $this->post_type =  get_post_type($post_id);
           }else{
             return $post_id;
           }
@@ -376,9 +347,9 @@ class Vcpm_Meta
      */
     public function show_meta_box($post) {
 
-        if (array_key_exists(get_post_type( get_the_ID() ),$this->meta_box))
+        if (array_key_exists(get_post_type( $post->ID ),$this->meta_box))
           {
-            $this->post_type =  get_post_type( get_the_ID() );
+            $this->post_type =  get_post_type( $post->ID );
 
             // Use nonce for verification
             wp_nonce_field( basename( __FILE__ ), $this->meta_box[$this->post_type]['id'].'_nonce' );

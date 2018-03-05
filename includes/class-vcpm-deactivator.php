@@ -1,15 +1,4 @@
 <?php
-
-/**
- * Fired during plugin deactivation
- *
- * @link       www.rakibhossain.cf
- * @since      1.0.0
- *
- * @package    Vcpm
- * @subpackage Vcpm/includes
- */
-
 /**
  * Fired during plugin deactivation.
  *
@@ -23,9 +12,9 @@
 class Vcpm_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Actions perform on deactivation.
 	 *
-	 * Long Description.
+	 * Unregister taxonomy an custom posts.
 	 *
 	 * @since    1.0.0
 	 */

@@ -80,25 +80,31 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 		);
 		
 		/**
-		 * Delete post.
+		 * Delete post and meta.
 		 */
 		foreach ( $vcpm_posts_data as $post_item ) {
 			foreach ( $post_item['post'] as $post ) {
+
+				$post_meta = get_post_meta( $post->ID );
 				wp_delete_post( $post->ID, true );
+
+				foreach ($post_meta as $key => $value) {
+					delete_post_meta($post->ID, $key);
+				}
 			}
 		}
 
 		/**
-		 * Delete Meta.
+		 * Delete taxonomy.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-meta.php';
-		$meta_data = Vcpm_Meta::vcpm_meta_box();
+		global $wpdb;
+		$wpdb->delete(
+			$wpdb->term_taxonomy,
+			array(
+				'taxonomy' => 'portfolio_category',
+			)
+		);
 
-		foreach ($meta_data as $meta_item) {
-			foreach ($meta_item['fields'] as $field) {
-				 delete_post_meta_by_key( $field['id'] );
-        	}  
-        }
 	}
 
-	//vcpm_delete_plugin();
+	vcpm_delete_plugin();

@@ -1,15 +1,4 @@
 <?php
-
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       www.rakibhossain.cf
- * @since      1.0.0
- *
- * @package    Vcpm
- * @subpackage Vcpm/admin
- */
-
 /**
  * The admin-specific functionality of the plugin.
  *

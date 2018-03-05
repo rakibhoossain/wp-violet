@@ -1,15 +1,4 @@
 <?php
-
-/**
- * Fired during plugin activation
- *
- * @link       www.rakibhossain.cf
- * @since      1.0.0
- *
- * @package    Vcpm
- * @subpackage Vcpm/includes
- */
-
 /**
  * Fired during plugin activation.
  *
@@ -23,26 +12,18 @@
 class Vcpm_Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Action perform on activation.
 	 *
-	 * Long Description.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
 
         /**
          * Custom Post Types
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-post_types.php';
         $vcpm_post_types = new Vcpm_Post_Types();
-        
-        /**
-         * Portfolio category
-         */
-        // require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-vcpm-taxonomy.php';
-        // $vcpm_Taxonomy = new Vcpm_Taxonomy();
 
         /**
          * The problem with the initial activation code is that when the activation hook runs, it's after the init hook has run,
@@ -61,8 +42,6 @@ class Vcpm_Activator {
         $vcpm_post_types->vcpm_testimonial();
         $vcpm_post_types->vcpm_team();
         $vcpm_post_types->vcpm_partner();
-
-        // $vcpm_Taxonomy->vcpm_taxonomy_portfolio();
 
         flush_rewrite_rules();
         

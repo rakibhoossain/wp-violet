@@ -1,18 +1,4 @@
 <?php
-
-/**
- * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
- *
- * @link       www.rakibhossain.cf
- * @since      1.0.0
- *
- * @package    Vcpm
- * @subpackage Vcpm/includes
- */
-
 /**
  * Define the internationalization functionality.
  *
